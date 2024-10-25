@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: loan_manager
+-- Host: localhost    Database: loan_manager
 -- ------------------------------------------------------
 -- Server version	8.0.39-0ubuntu0.24.04.2
 
@@ -39,7 +39,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'Bogotá','Chapinero','Avenida Caracas','Calle 72','Oficina principal'),(2,'Medellín','El Poblado',NULL,'Calle 10','Sucursal en zona comercial'),(3,'Cali','San Fernando','Avenida Roosevelt',NULL,'Oficina central'),(4,'Barranquilla','Alto Prado',NULL,'Calle 76','Sucursal norte');
+INSERT INTO `address` VALUES (1,'Bogotá','Chapinero','Avenida Caracas','Calle 63','Cerca de la estación de TransMilenio'),(2,'Medellín','El Poblado','Avenida El Poblado','Calle 10','Zona comercial'),(3,'Cali','Granada','Avenida 6','Carrera 4','Cerca de la zona rosa'),(4,'Barranquilla','El Prado','Calle 72','Carrera 50','Cerca de la universidad');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `audit_log` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `audit_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,6 @@ CREATE TABLE `audit_log` (
 
 LOCK TABLES `audit_log` WRITE;
 /*!40000 ALTER TABLE `audit_log` DISABLE KEYS */;
-INSERT INTO `audit_log` VALUES (1,4,'update','user','1','juan.perez@example.com','juanperez@newmail.com','2024-10-22 16:02:03');
 /*!40000 ALTER TABLE `audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +94,7 @@ CREATE TABLE `business` (
   KEY `legal_status_id` (`legal_status_id`),
   CONSTRAINT `business_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`),
   CONSTRAINT `business_ibfk_2` FOREIGN KEY (`legal_status_id`) REFERENCES `legal_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +103,6 @@ CREATE TABLE `business` (
 
 LOCK TABLES `business` WRITE;
 /*!40000 ALTER TABLE `business` DISABLE KEYS */;
-INSERT INTO `business` VALUES (1,'Finanzas Ltda.','Empresa de préstamos','3021234567',1,1,'9001234567'),(2,'Creditos Rápidos','Empresa de microcréditos','3107654321',2,2,'9007654321');
 /*!40000 ALTER TABLE `business` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +126,7 @@ CREATE TABLE `collection_schedule` (
   CONSTRAINT `collection_schedule_ibfk_1` FOREIGN KEY (`collector_id`) REFERENCES `user` (`id`),
   CONSTRAINT `collection_schedule_ibfk_2` FOREIGN KEY (`loan_id`) REFERENCES `loan` (`id`),
   CONSTRAINT `collection_schedule_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `collection_schedule_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +135,6 @@ CREATE TABLE `collection_schedule` (
 
 LOCK TABLES `collection_schedule` WRITE;
 /*!40000 ALTER TABLE `collection_schedule` DISABLE KEYS */;
-INSERT INTO `collection_schedule` VALUES (1,3,1,'2024-10-15',1);
 /*!40000 ALTER TABLE `collection_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +149,7 @@ CREATE TABLE `collection_schedule_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +158,6 @@ CREATE TABLE `collection_schedule_status` (
 
 LOCK TABLES `collection_schedule_status` WRITE;
 /*!40000 ALTER TABLE `collection_schedule_status` DISABLE KEYS */;
-INSERT INTO `collection_schedule_status` VALUES (1,'Programado'),(2,'Completado'),(3,'Cancelado');
 /*!40000 ALTER TABLE `collection_schedule_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +176,7 @@ CREATE TABLE `debt_summary` (
   PRIMARY KEY (`id`),
   KEY `client_id` (`client_id`),
   CONSTRAINT `debt_summary_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +185,7 @@ CREATE TABLE `debt_summary` (
 
 LOCK TABLES `debt_summary` WRITE;
 /*!40000 ALTER TABLE `debt_summary` DISABLE KEYS */;
-INSERT INTO `debt_summary` VALUES (1,1,4500.00,'2024-03-01');
+INSERT INTO `debt_summary` VALUES (1,1,900000.00,'2023-01-15'),(2,3,450000.00,'2023-02-20');
 /*!40000 ALTER TABLE `debt_summary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +203,7 @@ CREATE TABLE `financial_report` (
   `net_income` decimal(15,2) GENERATED ALWAYS AS ((`total_payments` - `total_loans`)) STORED,
   `report_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +212,7 @@ CREATE TABLE `financial_report` (
 
 LOCK TABLES `financial_report` WRITE;
 /*!40000 ALTER TABLE `financial_report` DISABLE KEYS */;
-INSERT INTO `financial_report` (`id`, `total_loans`, `total_payments`, `report_date`) VALUES (1,8000.00,700.00,'2024-10-01');
+INSERT INTO `financial_report` (`id`, `total_loans`, `total_payments`, `report_date`) VALUES (1,1500000.00,1500000.00,'2023-01-31'),(2,2000000.00,2000000.00,'2023-02-28');
 /*!40000 ALTER TABLE `financial_report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +243,7 @@ CREATE TABLE `guarantee` (
 
 LOCK TABLES `guarantee` WRITE;
 /*!40000 ALTER TABLE `guarantee` DISABLE KEYS */;
-INSERT INTO `guarantee` VALUES (1,1,1,'Carro Ford Fiesta',8000.00),(2,2,2,'Apartamento en Cali',50000.00);
+INSERT INTO `guarantee` VALUES (1,1,1,'Hipoteca sobre un apartamento',2000000.00),(2,2,2,'Prenda sobre un vehículo',1500000.00);
 /*!40000 ALTER TABLE `guarantee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +267,7 @@ CREATE TABLE `guarantee_type` (
 
 LOCK TABLES `guarantee_type` WRITE;
 /*!40000 ALTER TABLE `guarantee_type` DISABLE KEYS */;
-INSERT INTO `guarantee_type` VALUES (1,'Vehículo'),(2,'Propiedad'),(3,'Electrodoméstico');
+INSERT INTO `guarantee_type` VALUES (1,'Hipoteca'),(2,'Prenda'),(3,'Fianza');
 /*!40000 ALTER TABLE `guarantee_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +282,7 @@ CREATE TABLE `legal_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `legal_status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,7 +291,6 @@ CREATE TABLE `legal_status` (
 
 LOCK TABLES `legal_status` WRITE;
 /*!40000 ALTER TABLE `legal_status` DISABLE KEYS */;
-INSERT INTO `legal_status` VALUES (1,'Activo'),(2,'Inactivo'),(3,'En proceso judicial');
 /*!40000 ALTER TABLE `legal_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,8 +322,8 @@ CREATE TABLE `loan` (
   KEY `origin_id` (`origin_id`),
   KEY `payment_frequency_id` (`payment_frequency_id`),
   KEY `status_id` (`status_id`),
-  CONSTRAINT `loan_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `person` (`id`),
-  CONSTRAINT `loan_ibfk_2` FOREIGN KEY (`guarantor_id`) REFERENCES `person` (`id`),
+  CONSTRAINT `loan_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `loan_ibfk_2` FOREIGN KEY (`guarantor_id`) REFERENCES `user` (`id`),
   CONSTRAINT `loan_ibfk_3` FOREIGN KEY (`origin_id`) REFERENCES `loan` (`id`),
   CONSTRAINT `loan_ibfk_4` FOREIGN KEY (`payment_frequency_id`) REFERENCES `payment_frequency` (`id`),
   CONSTRAINT `loan_ibfk_5` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
@@ -343,7 +338,7 @@ CREATE TABLE `loan` (
 
 LOCK TABLES `loan` WRITE;
 /*!40000 ALTER TABLE `loan` DISABLE KEYS */;
-INSERT INTO `loan` (`id`, `client_id`, `guarantor_id`, `amount`, `interest`, `start_date`, `end_date`, `payment_frequency_id`, `origin_id`, `status_id`, `type`, `create_at`, `update_at`) VALUES (1,1,2,5000.00,5.00,'2024-01-01','2024-12-31',1,NULL,1,'Original','2024-10-22 16:02:03',NULL),(2,2,NULL,3000.00,3.00,'2024-02-01','2024-10-31',2,NULL,1,'Original','2024-10-22 16:02:03',NULL);
+INSERT INTO `loan` (`id`, `client_id`, `guarantor_id`, `amount`, `interest`, `start_date`, `end_date`, `payment_frequency_id`, `origin_id`, `status_id`, `type`, `create_at`, `update_at`) VALUES (1,1,2,1000000.00,10.00,'2023-01-01','2023-12-31',3,NULL,1,'Original','2024-10-25 21:21:52',NULL),(2,3,NULL,500000.00,12.00,'2023-02-01','2024-02-01',2,NULL,1,'Original','2024-10-25 21:21:52',NULL);
 /*!40000 ALTER TABLE `loan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,7 +361,7 @@ CREATE TABLE `notification` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `notification_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +370,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,1,'Su pago está próximo a vencer','2024-10-22 16:02:03',0,3),(2,2,'Su préstamo ha sido aprobado','2024-10-22 16:02:03',0,2);
+INSERT INTO `notification` VALUES (1,1,' Recordatorio de pago','2024-10-25 21:21:52',0,1),(2,2,'Notificación de préstamo vencido','2024-10-25 21:21:52',0,2),(3,3,'Notificación de pago procesado','2024-10-25 21:21:52',0,3);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +394,7 @@ CREATE TABLE `notification_type` (
 
 LOCK TABLES `notification_type` WRITE;
 /*!40000 ALTER TABLE `notification_type` DISABLE KEYS */;
-INSERT INTO `notification_type` VALUES (1,'Recordatorio de pago'),(2,'Actualización de préstamo'),(3,'Alerta de vencimiento');
+INSERT INTO `notification_type` VALUES (1,'Email'),(2,'SMS'),(3,'Push Notification');
 /*!40000 ALTER TABLE `notification_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,7 +414,7 @@ CREATE TABLE `overdue_report` (
   PRIMARY KEY (`id`),
   KEY `loan_id` (`loan_id`),
   CONSTRAINT `overdue_report_ibfk_1` FOREIGN KEY (`loan_id`) REFERENCES `loan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,7 +423,7 @@ CREATE TABLE `overdue_report` (
 
 LOCK TABLES `overdue_report` WRITE;
 /*!40000 ALTER TABLE `overdue_report` DISABLE KEYS */;
-INSERT INTO `overdue_report` VALUES (1,1,15,250.00,'2024-10-01');
+INSERT INTO `overdue_report` VALUES (1,1,10,100000.00,'2023-12-11'),(2,2,5,50000.00,'2024-02-06');
 /*!40000 ALTER TABLE `overdue_report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +455,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,500.00,'2024-03-01',2,1),(2,200.00,'2024-03-15',1,2);
+INSERT INTO `payment` VALUES (1,100000.00,'2023-01-15',2,1),(2,50000.00,'2023-02-20',2,2);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -479,8 +474,8 @@ CREATE TABLE `payment_collector` (
   KEY `payment_id` (`payment_id`),
   KEY `collector_id` (`collector_id`),
   CONSTRAINT `payment_collector_ibfk_1` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
-  CONSTRAINT `payment_collector_ibfk_2` FOREIGN KEY (`collector_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `payment_collector_ibfk_2` FOREIGN KEY (`collector_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -489,7 +484,7 @@ CREATE TABLE `payment_collector` (
 
 LOCK TABLES `payment_collector` WRITE;
 /*!40000 ALTER TABLE `payment_collector` DISABLE KEYS */;
-INSERT INTO `payment_collector` VALUES (1,1,3);
+INSERT INTO `payment_collector` VALUES (1,1,3),(2,2,3);
 /*!40000 ALTER TABLE `payment_collector` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -513,7 +508,7 @@ CREATE TABLE `payment_frequency` (
 
 LOCK TABLES `payment_frequency` WRITE;
 /*!40000 ALTER TABLE `payment_frequency` DISABLE KEYS */;
-INSERT INTO `payment_frequency` VALUES (1,'Mensual'),(2,'Quincenal'),(3,'Semanal');
+INSERT INTO `payment_frequency` VALUES (1,'Semanal'),(2,'Quincenal'),(3,'Mensual');
 /*!40000 ALTER TABLE `payment_frequency` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +530,7 @@ CREATE TABLE `payment_history` (
   KEY `payment_id` (`payment_id`),
   CONSTRAINT `payment_history_ibfk_1` FOREIGN KEY (`loan_id`) REFERENCES `loan` (`id`),
   CONSTRAINT `payment_history_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +539,7 @@ CREATE TABLE `payment_history` (
 
 LOCK TABLES `payment_history` WRITE;
 /*!40000 ALTER TABLE `payment_history` DISABLE KEYS */;
-INSERT INTO `payment_history` VALUES (1,1,1,'2024-03-01',500.00);
+INSERT INTO `payment_history` VALUES (1,1,1,'2023-01-15',100000.00),(2,2,2,'2023-02-20',50000.00);
 /*!40000 ALTER TABLE `payment_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -568,7 +563,7 @@ CREATE TABLE `payment_status` (
 
 LOCK TABLES `payment_status` WRITE;
 /*!40000 ALTER TABLE `payment_status` DISABLE KEYS */;
-INSERT INTO `payment_status` VALUES (1,'Pendiente'),(2,'Pagado'),(3,'Atrasado');
+INSERT INTO `payment_status` VALUES (1,'Pendiente'),(2,'Pagado'),(3,'Rechazado');
 /*!40000 ALTER TABLE `payment_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,8 +584,8 @@ CREATE TABLE `payment_validation` (
   KEY `payment_id` (`payment_id`),
   KEY `administrator_id` (`administrator_id`),
   CONSTRAINT `payment_validation_ibfk_1` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
-  CONSTRAINT `payment_validation_ibfk_2` FOREIGN KEY (`administrator_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `payment_validation_ibfk_2` FOREIGN KEY (`administrator_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -599,7 +594,7 @@ CREATE TABLE `payment_validation` (
 
 LOCK TABLES `payment_validation` WRITE;
 /*!40000 ALTER TABLE `payment_validation` DISABLE KEYS */;
-INSERT INTO `payment_validation` VALUES (1,1,4,'2024-03-05','Pago validado correctamente');
+INSERT INTO `payment_validation` VALUES (1,1,4,'2023-01-16','Pago procesado correctamente'),(2,2,4,'2023-02-21','Pago procesado correctamente');
 /*!40000 ALTER TABLE `payment_validation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -623,7 +618,7 @@ CREATE TABLE `permission` (
 
 LOCK TABLES `permission` WRITE;
 /*!40000 ALTER TABLE `permission` DISABLE KEYS */;
-INSERT INTO `permission` VALUES (1,'create_loan'),(2,'view_reports'),(3,'validate_payment'),(4,'manage_users');
+INSERT INTO `permission` VALUES (1,'create_loan'),(2,'view_reports'),(3,'manage_users'),(4,'process_payments');
 /*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,6 +641,8 @@ CREATE TABLE `person` (
   `salary` decimal(10,2) DEFAULT NULL,
   `commission_percentage` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `document` (`document`),
+  UNIQUE KEY `phone` (`phone`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `person_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -657,7 +654,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'Juan','Pérez','1234567890','Male','3001234567','1985-05-10',1,3000.00,10.00),(2,'María','Gómez','0987654321','Female','3009876543','1990-07-15',2,3500.00,NULL),(3,'Carlos','López','5678901234','Male','3112345678','1980-03-12',3,NULL,15.00),(4,'Ana','Ramírez','4321098765','Female','3012345678','1995-11-20',4,2500.00,NULL);
+INSERT INTO `person` VALUES (1,'Juan','Pérez','123456789','Male','3001234567','1985-05-15',1,2000000.00,5.00),(2,'María','González','987654321','Female','3109876543','1990-08-25',2,1800000.00,6.00),(3,'Carlos','Ramírez','456123789','Male','3204561234','1988-03-10',3,NULL,NULL),(4,'Laura','Martínez','321654987','Female','3006547891','1995-12-30',4,2500000.00,4.00);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -701,7 +698,7 @@ CREATE TABLE `role_permission` (
   KEY `permission_id` (`permission_id`),
   CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,7 +707,7 @@ CREATE TABLE `role_permission` (
 
 LOCK TABLES `role_permission` WRITE;
 /*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
-INSERT INTO `role_permission` VALUES (1,4,1),(2,4,2),(3,4,3),(4,4,4);
+INSERT INTO `role_permission` VALUES (1,1,1),(2,2,1),(3,3,2),(4,4,3),(5,4,4);
 /*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -730,7 +727,7 @@ CREATE TABLE `route` (
   KEY `collector_id` (`collector_id`),
   CONSTRAINT `route_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `user` (`id`),
   CONSTRAINT `route_ibfk_2` FOREIGN KEY (`collector_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -739,7 +736,6 @@ CREATE TABLE `route` (
 
 LOCK TABLES `route` WRITE;
 /*!40000 ALTER TABLE `route` DISABLE KEYS */;
-INSERT INTO `route` VALUES (1,1,3),(2,2,3);
 /*!40000 ALTER TABLE `route` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -763,7 +759,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Aprobado'),(2,'Rechazado'),(3,'Pendiente');
+INSERT INTO `status` VALUES (1,'Activo'),(2,'Inactivo'),(3,'Vencido');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,7 +792,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'juanp','juan.perez@example.com','password123',1,'2024-10-22 16:02:03',NULL),(2,'mariag','maria.gomez@example.com','password456',2,'2024-10-22 16:02:03',NULL),(3,'carlosl','carlos.lopez@example.com','password789',3,'2024-10-22 16:02:03',NULL),(4,'anar','ana.ramirez@example.com','password012',4,'2024-10-22 16:02:03',NULL);
+INSERT INTO `user` VALUES (1,'juan.perez','juan.perez@example.com','password123',1,'2024-10-25 21:21:52',NULL),(2,'maria.gonzalez','maria.gonzalez@example.com','password123',2,'2024-10-25 21:21:52',NULL),(3,'carlos.ramirez','carlos.ramirez@example.com','password123',3,'2024-10-25 21:21:52',NULL),(4,'laura.martinez','laura.martinez@example.com','password123',4,'2024-10-25 21:21:52',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -825,7 +821,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1,1),(2,2,1),(3,3,3),(4,4,4);
+INSERT INTO `user_role` VALUES (1,1,1),(2,2,2),(3,3,3),(4,4,4);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -838,4 +834,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 14:28:11
+-- Dump completed on 2024-10-25 16:23:53
